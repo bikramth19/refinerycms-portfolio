@@ -1,3 +1,13 @@
+<% # setup params for various action links
+  preview_url = gallery_path_for(item)
+  edit_url = refinery.edit_portfolio_admin_item_path(item)
+  delete_url = refinery.portfolio_admin_item_path(item)
+  delete_options = {
+     class: "cancel confirm-delete",
+            data: {confirm: t('message',  scope: 'refinery.admin.delete', title: item.title)}
+  }
+%>
+
 <li class='clearfix record <%= cycle("on", "on-hover") %>' id="<%= dom_id(item) -%>">
   <div class='details'>
     <span class='title'>
@@ -19,17 +29,11 @@
         <% end %>
       </span>
     </span>
+
     <span class='actions'>
-      <%= link_to refinery_icon_tag("application_go.png"), gallery_path_for(item),
-          :title => t('.view_live_html'),
-          :target => "_blank" %>
-      <%= link_to refinery_icon_tag("application_edit.png"), refinery.edit_portfolio_admin_item_path(item),
-          :title => t('.edit') %>
-      <%= link_to refinery_icon_tag("delete.png"), refinery.portfolio_admin_item_path(item),
-          :class => "cancel confirm-delete",
-          :title => t('.delete'),
-          :data => { :confirm => t('message', :scope => 'refinery.admin.delete', :title => item.title) },
-          :method => :delete %>
+      <%= action_icon(:preview, preview_url, t('.view_live_html')) %>
+      <%= action_icon(:edit, edit_url, t('.edit' ) ) %>
+      <%= action_icon(:delete, delete_url, t('.delete' ), delete_options ) %>
     </span>
   </div>
   <div class='image'>
